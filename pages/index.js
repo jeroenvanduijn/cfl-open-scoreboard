@@ -131,7 +131,7 @@ function TeamCard({ team, score, rank, maxPerCategory, isLeader }) {
 
         {/* Team name & Subtitle */}
         <h2 className="team-name" style={{ color: cfg.color }}>{team}</h2>
-        <p className="team-subtitle">{cfg.subtitle || ' '}</p> {/*   is a non-breaking space to keep height */}
+        <p className="team-subtitle">{cfg.subtitle || '\u00A0'}</p> {/* non-breaking space to keep height */}
 
         {/* Total score block */}
         <div className="score-block">
