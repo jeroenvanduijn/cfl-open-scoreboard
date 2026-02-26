@@ -9,7 +9,7 @@ const API_URL =
 const REFRESH_INTERVAL = 30_000; // ms
 
 const TEAM_CONFIG = {
-  'Never Skip Jef Day': {
+  'Never Skip Jeff Day': {
     color: '#EF4C37',
     logo: '/logos/team1-neverskipjefday.png',
     subtitle: null,
@@ -37,7 +37,7 @@ const CATEGORIES = [
 // ─── DEMO DATA ────────────────────────────────────────────────────────────────
 const DEMO_DATA = {
   scores: {
-    'Never Skip Jef Day': {
+    'Never Skip Jeff Day': {
       deelname: 14, ranking: 87, bestDressed: 2,
       teamOutfit: 0, communitySpirit: 5, totaal: 108, aantalDeelnemers: 14,
     },
