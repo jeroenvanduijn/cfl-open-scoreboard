@@ -27,11 +27,11 @@ const TEAM_CONFIG = {
 };
 
 const CATEGORIES = [
-  { key: 'deelname',       label: 'Deelname',        emoji: '🏋️' },
-  { key: 'ranking',        label: 'Ranking',          emoji: '📊' },
-  { key: 'bestDressed',    label: 'Best Dressed',     emoji: '✨' },
-  { key: 'teamOutfit',     label: 'Team Outfit',      emoji: '👕' },
-  { key: 'communitySpirit',label: 'Community Spirit', emoji: '🔥' },
+  { key: 'deelname', label: 'Deelname', emoji: '🏋️' },
+  { key: 'ranking', label: 'Ranking', emoji: '📊' },
+  { key: 'bestDressed', label: 'Best Dressed', emoji: '✨' },
+  { key: 'teamOutfit', label: 'Team Outfit', emoji: '👕' },
+  { key: 'communitySpirit', label: 'Community Spirit', emoji: '🔥' },
 ];
 
 // ─── DEMO DATA ────────────────────────────────────────────────────────────────
@@ -61,9 +61,9 @@ function formatTime(iso) {
 }
 
 function rankBadge(rank) {
-  if (rank === 0) return { icon: '🏆', label: 'LEIDER',   cls: 'badge-gold'   };
-  if (rank === 1) return { icon: '🥈', label: '2E PLEK',  cls: 'badge-silver' };
-  return           { icon: '🥉', label: '3E PLEK',  cls: 'badge-bronze' };
+  if (rank === 0) return { icon: '🏆', label: 'LEIDER', cls: 'badge-gold' };
+  if (rank === 1) return { icon: '🥈', label: '2E PLEK', cls: 'badge-silver' };
+  return { icon: '🥉', label: '3E PLEK', cls: 'badge-bronze' };
 }
 
 // ─── COMPONENTS ───────────────────────────────────────────────────────────────
@@ -78,10 +78,15 @@ function Header({ bijgewerkt }) {
         </div>
       </div>
       <div className="header-right">
-        <span className="update-label">Bijgewerkt: {formatTime(bijgewerkt)}</span>
+        <span className="update-label">
+          <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          BIJGEWERKT: {formatTime(bijgewerkt)}
+        </span>
         <span className="week-pill">WEEK {ACTIEVE_WEEK}</span>
-        <span className="live-dot" />
-        <span className="live-label">LIVE</span>
+        <div className="live-wrapper">
+          <span className="live-dot" />
+          <span className="live-label">LIVE</span>
+        </div>
       </div>
     </header>
   );
@@ -105,65 +110,62 @@ function TeamCard({ team, score, rank, maxPerCategory, isLeader }) {
       {/* Top color bar */}
       <div className="team-top-bar" style={{ background: cfg.color }} />
 
-      {/* Logo */}
-      <div className="team-logo-wrap">
-        {cfg.logo ? (
-          <img
-            src={cfg.logo}
-            alt={team}
-            className="team-logo"
-            style={{ width: isLeader ? 130 : 110, height: isLeader ? 130 : 110 }}
-          />
-        ) : (
-          <div className="team-logo-placeholder" style={{ borderColor: cfg.color }}>
-            <span style={{ color: cfg.color, fontSize: '2rem' }}>🏋️</span>
+      <div className="team-card-content">
+        <div className="team-header-row">
+          {/* Logo */}
+          <div className="team-logo-wrap" style={{ borderColor: cfg.color }}>
+            {cfg.logo ? (
+              <img src={cfg.logo} alt={team} className="team-logo" />
+            ) : (
+              <div className="team-logo-placeholder">
+                <span style={{ color: cfg.color, fontSize: '3rem' }}>🏋️</span>
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      {/* Rank badge */}
-      <div className={`rank-badge ${badge.cls}`}>
-        <span>{badge.icon}</span> {badge.label}
-      </div>
-
-      {/* Team name */}
-      <h2 className="team-name" style={{ color: cfg.color }}>{team}</h2>
-
-      {/* Subtitle */}
-      {cfg.subtitle && (
-        <p className="team-subtitle">{cfg.subtitle}</p>
-      )}
-
-      {/* Total score */}
-      <div className="score-block">
-        <span className="score-label-top">TOTAAL</span>
-        <span className="score-number" style={{ color: cfg.color }}>
-          {score.totaal}
-        </span>
-        <span className="score-label-bottom">PUNTEN</span>
-      </div>
-
-      {/* Category breakdown */}
-      <div className="categories">
-        {CATEGORIES.map(cat => (
-          <div key={cat.key} className="cat-row">
-            <span className="cat-emoji">{cat.emoji}</span>
-            <span className="cat-label">{cat.label}</span>
-            <CategoryBar
-              value={score[cat.key]}
-              max={maxPerCategory[cat.key]}
-              color={cfg.color}
-            />
-            <span className="cat-value" style={{ color: cfg.color }}>
-              {score[cat.key]}
-            </span>
+          {/* Rank badge */}
+          <div className={`rank-badge ${badge.cls}`}>
+            <span>{badge.icon}</span> {badge.label}
           </div>
-        ))}
-      </div>
+        </div>
 
-      {/* Participants */}
-      <div className="participants">
-        {score.aantalDeelnemers} deelnemers
+        {/* Team name & Subtitle */}
+        <h2 className="team-name" style={{ color: cfg.color }}>{team}</h2>
+        <p className="team-subtitle">{cfg.subtitle || ' '}</p> {/*   is a non-breaking space to keep height */}
+
+        {/* Total score block */}
+        <div className="score-block">
+          <div className="score-labels">
+            <span className="score-label-top">TOTAAL</span>
+            <span className="score-label-bottom">PUNTEN</span>
+          </div>
+          <span className="score-number" style={{ color: cfg.color }}>
+            {score.totaal}
+          </span>
+        </div>
+
+        {/* Category breakdown */}
+        <div className="categories">
+          {CATEGORIES.map(cat => (
+            <div key={cat.key} className="cat-row">
+              <span className="cat-emoji">{cat.emoji}</span>
+              <span className="cat-label">{cat.label}</span>
+              <CategoryBar
+                value={score[cat.key]}
+                max={maxPerCategory[cat.key]}
+                color={cfg.color}
+              />
+              <span className="cat-value" style={{ color: cfg.color }}>
+                {score[cat.key]}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Participants */}
+        <div className="participants-badge">
+          👥 <span>{score.aantalDeelnemers}</span> DEELNEMERS
+        </div>
       </div>
     </div>
   );
