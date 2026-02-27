@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -6,6 +6,8 @@ import Link from 'next/link';
 const API_URL =
     'https://script.google.com/macros/s/AKfycbzSgAuQFaAdH8LkcH8X3gofYDrrbJowX3YwcmqVflhKv9ZDXuvXn6nH-87xhuylTGFG/exec';
 const REFRESH_INTERVAL = 30_000;
+const TAB_CYCLE_INTERVAL = 20_000; // auto-cycle tabs every 20s
+const MANUAL_PAUSE_DURATION = 60_000; // pause auto-cycle for 60s after manual click
 
 const TEAM_COLORS = {
     'Never Skip Jeff Day': '#EF4C37',
@@ -46,6 +48,25 @@ export default function Rankings() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeGroup, setActiveGroup] = useState('Foundations_Vrouw');
+    const pausedUntilRef = useRef(0); // timestamp until which auto-cycle is paused
+
+    // Auto-cycle through tabs every 20 seconds
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (Date.now() < pausedUntilRef.current) return; // paused by manual click
+            setActiveGroup(prev => {
+                const idx = GROUPS.findIndex(g => g.key === prev);
+                return GROUPS[(idx + 1) % GROUPS.length].key;
+            });
+        }, TAB_CYCLE_INTERVAL);
+        return () => clearInterval(interval);
+    }, []);
+
+    // Manual tab click handler — pauses auto-cycle
+    const handleTabClick = (groupKey) => {
+        setActiveGroup(groupKey);
+        pausedUntilRef.current = Date.now() + MANUAL_PAUSE_DURATION;
+    };
 
     const fetchData = useCallback(async () => {
         try {
@@ -124,7 +145,7 @@ export default function Rankings() {
                         <button
                             key={g.key}
                             className={`r-tab ${activeGroup === g.key ? 'r-tab--active' : ''}`}
-                            onClick={() => setActiveGroup(g.key)}
+                            onClick={() => handleTabClick(g.key)}
                         >
                             <span className="r-tab-division">{g.label}</span>
                             <span className="r-tab-gender">{g.icon} {g.gender}</span>
