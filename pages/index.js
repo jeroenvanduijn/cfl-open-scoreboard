@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
+import Link from 'next/link';
 
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
 const ACTIEVE_WEEK = 1;
@@ -258,6 +258,10 @@ export default function Scoreboard() {
 
         <footer className="footer">
           <span className="footer-left">CrossFit Leiden — Community over competition</span>
+          <Link href="/rankings" className="nav-rankings-link">
+            <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path></svg>
+            Bekijk Rankings
+          </Link>
           <span className="footer-right">
             Laatste update: {formatTime(data?.bijgewerkt)} &nbsp;·&nbsp; Refresh: elke {REFRESH_INTERVAL / 1000}s
           </span>

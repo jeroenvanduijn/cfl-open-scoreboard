@@ -520,3 +520,603 @@ body {
   color: var(--text-muted);
   letter-spacing: 0.2em;
 }
+
+/* ─── NAV LINK ON SCOREBOARD ──────────────────────────────────────────────── */
+.nav-rankings-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-heavy);
+  border-radius: 6px;
+  padding: 10px 24px 8px;
+  color: var(--text-main);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.nav-rankings-link:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--red);
+}
+
+.nav-rankings-link svg {
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   RANKINGS PAGE
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.r-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  background: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+/* override fixed sizing for rankings (responsive) */
+.r-page,
+.r-page~* {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* ─── RANKINGS HEADER ─────────────────────────────────────────────────────── */
+.r-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-dark);
+  padding: 20px 40px;
+  border-bottom: 2px solid var(--border-heavy);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.r-header-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.r-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-heavy);
+  border-radius: 6px;
+  padding: 8px 18px 6px;
+  color: var(--text-main);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background 0.2s;
+}
+
+.r-back-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.r-header-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.r-header-main {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.6rem;
+  line-height: 0.95;
+  color: var(--text-main);
+  letter-spacing: 0.03em;
+}
+
+.r-header-sub {
+  font-size: 1.1rem;
+  color: var(--red);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.r-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.r-update-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.r-live-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(40, 190, 100, 0.1);
+  border: 1px solid rgba(40, 190, 100, 0.3);
+  padding: 6px 16px 4px;
+  border-radius: 4px;
+}
+
+.r-live-dot {
+  width: 12px;
+  height: 12px;
+  background: #28be64;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+.r-live-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  color: #28be64;
+  letter-spacing: 0.15em;
+}
+
+/* ─── TAB NAVIGATION ──────────────────────────────────────────────────────── */
+.r-tabs {
+  display: flex;
+  gap: 0;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-heavy);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.r-tab {
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 16px 12px 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  color: var(--text-muted);
+}
+
+.r-tab:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.r-tab--active {
+  border-bottom-color: var(--red);
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.r-tab-division {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.r-tab-gender {
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+
+.r-tab--active .r-tab-division {
+  color: var(--red);
+}
+
+.r-tab--active .r-tab-gender {
+  opacity: 1;
+}
+
+/* ─── CONTENT ─────────────────────────────────────────────────────────────── */
+.r-content {
+  flex: 1;
+  padding: 32px 40px;
+  overflow-y: auto;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.r-table-meta {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.r-athlete-count {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ─── TABLE ───────────────────────────────────────────────────────────────── */
+.r-table-wrap {
+  border: 1px solid var(--border-heavy);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.r-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-card);
+}
+
+.r-th {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 16px 20px 12px;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 2px solid var(--border-heavy);
+  white-space: nowrap;
+}
+
+.r-th-rank {
+  width: 60px;
+  text-align: center;
+}
+
+.r-th-points {
+  width: 100px;
+  text-align: right;
+}
+
+.r-th-score {
+  width: 140px;
+}
+
+.r-row {
+  border-bottom: 1px solid var(--border-light);
+  transition: background 0.15s;
+  background: linear-gradient(90deg,
+      color-mix(in srgb, var(--team-color) 8%, transparent) 0%,
+      transparent 60%);
+}
+
+.r-row:hover {
+  background: linear-gradient(90deg,
+      color-mix(in srgb, var(--team-color) 15%, transparent) 0%,
+      rgba(255, 255, 255, 0.03) 60%);
+}
+
+.r-row--top3 {
+  background: linear-gradient(90deg,
+      color-mix(in srgb, var(--team-color) 12%, transparent) 0%,
+      transparent 60%);
+}
+
+.r-td {
+  padding: 14px 20px;
+  vertical-align: middle;
+}
+
+.r-td-rank {
+  text-align: center;
+}
+
+.r-td-points {
+  text-align: right;
+}
+
+/* Rank */
+.r-rank {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  color: var(--text-muted);
+}
+
+.r-rank--medal {
+  color: var(--text-main);
+}
+
+.r-rank-icon {
+  font-size: 1.5rem;
+}
+
+.r-rank-num {
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Athlete name */
+.r-athlete-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 0.02em;
+}
+
+/* Team pill */
+.r-team-pill {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 4px 12px 3px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+/* Score */
+.r-score-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 14px 3px;
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+  letter-spacing: 0.02em;
+}
+
+.r-score-badge[data-type="reps"] {
+  color: var(--text-muted);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Points */
+.r-points {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--red);
+  letter-spacing: 0.05em;
+}
+
+.r-points-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-left: 4px;
+  letter-spacing: 0.06em;
+}
+
+/* Divider */
+.r-divider-row td {
+  padding: 0;
+}
+
+.r-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: rgba(239, 76, 55, 0.05);
+}
+
+.r-divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--red);
+  opacity: 0.3;
+}
+
+.r-divider-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  color: var(--red);
+  letter-spacing: 0.2em;
+  white-space: nowrap;
+}
+
+/* ─── EMPTY & LOADING ─────────────────────────────────────────────────────── */
+.r-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 16px;
+}
+
+.r-empty-icon {
+  font-size: 4rem;
+}
+
+.r-empty-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--text-main);
+  letter-spacing: 0.06em;
+}
+
+.r-empty-sub {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.r-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 20px;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.r-loading-bar-track {
+  width: 300px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.r-loading-bar-fill {
+  height: 100%;
+  background: var(--red);
+  border-radius: 2px;
+  animation: loading 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* ─── RANKINGS FOOTER ─────────────────────────────────────────────────────── */
+.r-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 40px;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-heavy);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ─── RESPONSIVE ──────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .r-header {
+    padding: 16px 20px;
+  }
+
+  .r-content {
+    padding: 20px 16px;
+  }
+
+  .r-footer {
+    padding: 12px 20px;
+  }
+
+  .r-header-main {
+    font-size: 1.8rem;
+  }
+
+  .r-header-sub {
+    font-size: 0.9rem;
+  }
+
+  .r-tab {
+    min-width: 100px;
+    padding: 12px 8px 10px;
+  }
+
+  .r-tab-division {
+    font-size: 1.1rem;
+  }
+
+  .r-tab-gender {
+    font-size: 0.8rem;
+  }
+
+  .r-th {
+    padding: 12px 10px 8px;
+    font-size: 0.9rem;
+  }
+
+  .r-td {
+    padding: 10px;
+  }
+
+  .r-team-pill {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+  }
+
+  .r-athlete-name {
+    font-size: 1rem;
+  }
+
+  .r-points {
+    font-size: 1.5rem;
+  }
+
+  .r-th-team {
+    display: none;
+  }
+
+  .r-td-team {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .r-tabs {
+    gap: 0;
+  }
+
+  .r-tab {
+    min-width: 70px;
+    padding: 10px 6px 8px;
+  }
+
+  .r-tab-division {
+    font-size: 0.95rem;
+  }
+
+  .r-tab-gender {
+    font-size: 0.7rem;
+  }
+
+  .r-header-left {
+    gap: 12px;
+  }
+
+  .r-back-btn {
+    padding: 6px 12px 4px;
+    font-size: 0.9rem;
+  }
+
+  .r-score-badge {
+    font-size: 0.95rem;
+    padding: 3px 8px;
+  }
+
+  .r-rank-icon {
+    font-size: 1.2rem;
+  }
+
+  .r-th-score {
+    display: none;
+  }
+
+  .r-td-score {
+    display: none;
+  }
+}
