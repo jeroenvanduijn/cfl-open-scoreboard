@@ -231,7 +231,7 @@ export default function Scoreboard() {
     <>
       <Head>
         <title>CrossFit Leiden Open 2026 — Scoreboard</title>
-        <meta name="viewport" content="width=1920" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

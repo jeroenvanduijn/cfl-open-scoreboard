@@ -521,6 +521,359 @@ body {
   letter-spacing: 0.2em;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SCOREBOARD — RESPONSIVE OVERRIDES
+   TV stays at 1920×1080 (min-width: 1920). Everything below adapts.
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1919px) {
+
+  html,
+  body {
+    width: 100%;
+    height: auto;
+    overflow: auto;
+  }
+
+  .page {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .loading-screen {
+    width: 100%;
+    height: 100vh;
+  }
+}
+
+/* ── Tablet / small desktop (≤1200px) ── */
+@media (max-width: 1200px) {
+  .header {
+    padding: 0 32px;
+    height: 80px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .header-main {
+    font-size: 2.2rem;
+  }
+
+  .header-sub {
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+  }
+
+  .diamond {
+    width: 32px;
+    height: 32px;
+  }
+
+  .teams-grid {
+    padding: 24px 32px;
+    gap: 20px;
+  }
+
+  .team-card-content {
+    padding: 20px 24px;
+  }
+
+  .team-logo-wrap {
+    width: 110px;
+    height: 110px;
+  }
+
+  .team-card--leader .team-logo-wrap {
+    width: 130px;
+    height: 130px;
+  }
+
+  .team-name {
+    font-size: 2.2rem;
+  }
+
+  .score-number {
+    font-size: 5.5rem;
+  }
+
+  .score-block {
+    padding: 14px;
+    margin: 20px 0 28px;
+  }
+
+  .cat-row {
+    grid-template-columns: 28px 110px 1fr 40px;
+    gap: 8px;
+  }
+
+  .cat-label {
+    font-size: 0.95rem;
+  }
+
+  .cat-value {
+    font-size: 1.4rem;
+  }
+
+  .bar-track {
+    height: 12px;
+  }
+
+  .rank-badge {
+    font-size: 1.1rem;
+    padding: 4px 16px 2px;
+  }
+
+  .footer {
+    padding: 0 32px;
+    height: 44px;
+  }
+}
+
+/* ── Mobile (≤768px) — stack teams vertically ── */
+@media (max-width: 768px) {
+  .header {
+    padding: 12px 20px;
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .header-left {
+    gap: 14px;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .header-main {
+    font-size: 1.8rem;
+  }
+
+  .header-sub {
+    font-size: 0.85rem;
+  }
+
+  .diamond {
+    width: 28px;
+    height: 28px;
+  }
+
+  .week-pill {
+    font-size: 1.2rem;
+    padding: 4px 16px 0;
+  }
+
+  .live-wrapper {
+    padding: 6px 14px 4px;
+  }
+
+  .update-label {
+    font-size: 0.9rem;
+  }
+
+  .teams-grid {
+    grid-template-columns: 1fr;
+    padding: 20px 16px;
+    gap: 20px;
+  }
+
+  .team-card--leader {
+    transform: none;
+    order: -1;
+    /* leader stays on top */
+  }
+
+  .team-card {
+    border-radius: 12px;
+  }
+
+  .team-card-content {
+    padding: 20px 20px;
+  }
+
+  .team-logo-wrap {
+    width: 100px;
+    height: 100px;
+  }
+
+  .team-card--leader .team-logo-wrap {
+    width: 120px;
+    height: 120px;
+  }
+
+  .team-name {
+    font-size: 2rem;
+  }
+
+  .team-subtitle {
+    font-size: 1rem;
+    margin-top: 4px;
+  }
+
+  .score-block {
+    gap: 14px;
+    padding: 14px;
+    margin: 16px 0 20px;
+  }
+
+  .score-number {
+    font-size: 5rem;
+  }
+
+  .score-label-top {
+    font-size: 1rem;
+  }
+
+  .score-label-bottom {
+    font-size: 1.2rem;
+  }
+
+  .categories {
+    gap: 12px;
+  }
+
+  .cat-row {
+    grid-template-columns: 28px 120px 1fr 40px;
+    gap: 8px;
+  }
+
+  .cat-emoji {
+    font-size: 1.2rem;
+  }
+
+  .cat-label {
+    font-size: 1rem;
+  }
+
+  .cat-value {
+    font-size: 1.4rem;
+  }
+
+  .bar-track {
+    height: 12px;
+  }
+
+  .rank-badge {
+    font-size: 1rem;
+    margin-top: -24px;
+  }
+
+  .participants-badge {
+    font-size: 0.9rem;
+  }
+
+  .footer {
+    flex-direction: column;
+    height: auto;
+    padding: 16px 20px;
+    gap: 12px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-left,
+  .footer-right {
+    font-size: 0.85rem;
+  }
+
+  .loading-title {
+    font-size: 2.4rem;
+  }
+
+  .loading-sub {
+    font-size: 1rem;
+  }
+
+  .loading-bar-track {
+    width: 260px;
+  }
+}
+
+/* ── Small phone (≤480px) ── */
+@media (max-width: 480px) {
+  .header-main {
+    font-size: 1.5rem;
+  }
+
+  .header-sub {
+    font-size: 0.75rem;
+  }
+
+  .diamond {
+    width: 24px;
+    height: 24px;
+  }
+
+  .teams-grid {
+    padding: 16px 12px;
+    gap: 16px;
+  }
+
+  .team-card-content {
+    padding: 16px 14px;
+  }
+
+  .team-logo-wrap {
+    width: 80px;
+    height: 80px;
+  }
+
+  .team-card--leader .team-logo-wrap {
+    width: 100px;
+    height: 100px;
+  }
+
+  .team-name {
+    font-size: 1.6rem;
+  }
+
+  .score-number {
+    font-size: 4rem;
+  }
+
+  .score-block {
+    padding: 10px;
+    margin: 12px 0 16px;
+    gap: 10px;
+  }
+
+  .cat-row {
+    grid-template-columns: 24px 100px 1fr 36px;
+    gap: 6px;
+  }
+
+  .cat-label {
+    font-size: 0.85rem;
+  }
+
+  .cat-value {
+    font-size: 1.2rem;
+  }
+
+  .cat-emoji {
+    font-size: 1rem;
+  }
+
+  .bar-track {
+    height: 10px;
+  }
+
+  .rank-badge {
+    font-size: 0.9rem;
+    padding: 3px 12px 1px;
+  }
+
+  .nav-rankings-link {
+    font-size: 1.1rem;
+    padding: 8px 18px 6px;
+  }
+}
+
 /* ─── NAV LINK ON SCOREBOARD ──────────────────────────────────────────────── */
 .nav-rankings-link {
   display: inline-flex;
