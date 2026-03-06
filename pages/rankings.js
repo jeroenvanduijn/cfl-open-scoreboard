@@ -51,7 +51,7 @@ export default function Rankings() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeGroup, setActiveGroup] = useState('Foundations_Vrouw');
-    const [activeEvent, setActiveEvent] = useState(null); // will be set from API actieveWeek
+    const [activeEvent, setActiveEvent] = useState('26.2');
     const pausedUntilRef = useRef(0); // timestamp until which auto-cycle is paused
 
     // Auto-cycle through tabs every 20 seconds
@@ -84,10 +84,6 @@ export default function Rankings() {
             if (!res.ok) throw new Error('HTTP ' + res.status);
             const json = await res.json();
             setData(json);
-            // Set initial active event from API
-            if (!activeEvent && json.actieveWeek) {
-                setActiveEvent(json.actieveWeek);
-            }
         } catch (err) {
             console.warn('API niet bereikbaar:', err.message);
         } finally {
