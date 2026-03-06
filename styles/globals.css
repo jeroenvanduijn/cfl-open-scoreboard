@@ -1347,6 +1347,100 @@ body {
   animation: loading 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
+/* ─── EVENT SELECTOR ──────────────────────────────────────────────────────── */
+.r-event-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 40px;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.r-event-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 28px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.r-event-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-main);
+}
+
+.r-event-btn--active {
+  background: linear-gradient(135deg, rgba(239, 76, 55, 0.15), rgba(239, 76, 55, 0.05));
+  border-color: var(--red);
+  color: var(--text-main);
+  box-shadow: 0 0 20px rgba(239, 76, 55, 0.15);
+}
+
+/* ─── OVERALL RANKING TABLE ADDITIONS ─────────────────────────────────────── */
+.r-th-event-pts {
+  width: 100px;
+  text-align: center;
+}
+
+.r-th-total-pts {
+  width: 110px;
+  text-align: right;
+}
+
+.r-td-event-pts {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.r-td-total-pts {
+  text-align: right;
+}
+
+.r-event-pts-cell {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.r-event-pts-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  color: var(--text-main);
+  letter-spacing: 0.03em;
+}
+
+.r-event-pts-rank {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.r-event-pts-empty {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.15);
+}
+
+.r-total-points {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  color: var(--red);
+  letter-spacing: 0.05em;
+}
+
 /* ─── RANKINGS FOOTER ─────────────────────────────────────────────────────── */
 .r-footer {
   display: flex;
@@ -1440,10 +1534,112 @@ body {
     font-size: 0.75rem;
     padding: 3px 8px 2px;
   }
+
+  /* Event selector compact */
+  .r-event-selector {
+    padding: 10px 16px;
+    gap: 3px;
+  }
+
+  .r-event-btn {
+    padding: 8px 18px 6px;
+    font-size: 1.1rem;
+  }
+
+  /* Overall table compact */
+  .r-th-event-pts {
+    width: 80px;
+  }
+
+  .r-th-total-pts {
+    width: 90px;
+  }
+
+  .r-event-pts-value {
+    font-size: 1.3rem;
+  }
+
+  .r-total-points {
+    font-size: 1.8rem;
+  }
 }
 
 /* ── Rankings: Mobile (≤600px) — card-style rows ── */
 @media (max-width: 600px) {
+
+  /* Event selector stacked */
+  .r-event-selector {
+    padding: 8px 12px;
+    gap: 4px;
+  }
+
+  .r-event-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 8px 10px 6px;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* Overall table: mobile card rows */
+  .r-table--overall thead {
+    display: none;
+  }
+
+  .r-table--overall,
+  .r-table--overall tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .r-table--overall .r-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border-light);
+    align-items: center;
+  }
+
+  .r-table--overall .r-td-rank {
+    width: 40px;
+    padding: 0;
+  }
+
+  .r-table--overall .r-td-name {
+    flex: 1;
+    min-width: 120px;
+    padding: 0;
+  }
+
+  .r-table--overall .r-td-total-pts {
+    padding: 0;
+  }
+
+  .r-table--overall .r-td-team {
+    width: 100%;
+    padding: 0;
+    order: 10;
+  }
+
+  .r-table--overall .r-td-event-pts {
+    padding: 4px 8px;
+    order: 11;
+  }
+
+  .r-event-pts-cell {
+    flex-direction: row;
+    gap: 4px;
+  }
+
+  .r-event-pts-value {
+    font-size: 1.1rem;
+  }
+
+  .r-total-points {
+    font-size: 1.6rem;
+  }
+
   .r-header {
     padding: 12px 14px;
     flex-direction: column;

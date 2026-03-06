@@ -25,6 +25,9 @@ const GROUPS = [
     { key: 'Rx_Man', label: 'Rx', gender: 'Men', icon: '♂' },
 ];
 
+// Available event views
+const EVENT_VIEWS = ['26.1', '26.2', 'Overall'];
+
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 function formatTime(iso) {
     if (!iso) return '--:--';
@@ -48,6 +51,7 @@ export default function Rankings() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeGroup, setActiveGroup] = useState('Foundations_Vrouw');
+    const [activeEvent, setActiveEvent] = useState(null); // will be set from API actieveWeek
     const pausedUntilRef = useRef(0); // timestamp until which auto-cycle is paused
 
     // Auto-cycle through tabs every 20 seconds
@@ -68,12 +72,22 @@ export default function Rankings() {
         pausedUntilRef.current = Date.now() + MANUAL_PAUSE_DURATION;
     };
 
+    // Event selector click — also pauses auto-cycle
+    const handleEventClick = (eventKey) => {
+        setActiveEvent(eventKey);
+        pausedUntilRef.current = Date.now() + MANUAL_PAUSE_DURATION;
+    };
+
     const fetchData = useCallback(async () => {
         try {
             const res = await fetch(API_URL);
             if (!res.ok) throw new Error('HTTP ' + res.status);
             const json = await res.json();
             setData(json);
+            // Set initial active event from API
+            if (!activeEvent && json.actieveWeek) {
+                setActiveEvent(json.actieveWeek);
+            }
         } catch (err) {
             console.warn('API niet bereikbaar:', err.message);
         } finally {
@@ -87,15 +101,25 @@ export default function Rankings() {
         return () => clearInterval(interval);
     }, []);
 
-    // Derive week key and rankings
-    const actieveWeek = data?.actieveWeek || null;
-    const weekRankings = data?.rankings?.[actieveWeek] || {};
-    const athletes = weekRankings[activeGroup] || [];
+    const isOverall = activeEvent === 'Overall';
+
+    // Derive rankings based on selected view
+    let athletes = [];
+    if (isOverall) {
+        athletes = data?.totalRankings?.[activeGroup] || [];
+    } else {
+        const weekRankings = data?.rankings?.[activeEvent] || {};
+        athletes = weekRankings[activeGroup] || [];
+    }
+
     const currentGroupInfo = GROUPS.find(g => g.key === activeGroup);
 
-    // Separate finishers from non-finishers
-    const finishers = athletes.filter(a => a.scoreType === 'tijd');
-    const nonFinishers = athletes.filter(a => a.scoreType !== 'tijd');
+    // For per-event views: separate finishers from non-finishers
+    const finishers = !isOverall ? athletes.filter(a => a.scoreType === 'tijd') : [];
+    const nonFinishers = !isOverall ? athletes.filter(a => a.scoreType !== 'tijd') : [];
+
+    // Determine which events have data (for the event selector)
+    const availableEvents = data?.rankings ? Object.keys(data.rankings) : [];
 
     return (
         <>
@@ -123,7 +147,7 @@ export default function Rankings() {
                                 {currentGroupInfo?.label} — {currentGroupInfo?.gender}
                             </span>
                             <span className="r-header-sub">
-                                {actieveWeek || '—'} · Individual Rankings
+                                {isOverall ? 'Overall Rankings' : `${activeEvent || '—'} · Individual Rankings`}
                             </span>
                         </div>
                     </div>
@@ -138,6 +162,19 @@ export default function Rankings() {
                         </div>
                     </div>
                 </header>
+
+                {/* ── EVENT SELECTOR ── */}
+                <nav className="r-event-selector">
+                    {EVENT_VIEWS.map(ev => (
+                        <button
+                            key={ev}
+                            className={`r-event-btn ${activeEvent === ev ? 'r-event-btn--active' : ''}`}
+                            onClick={() => handleEventClick(ev)}
+                        >
+                            {ev === 'Overall' ? '🏆 Overall' : `📋 ${ev}`}
+                        </button>
+                    ))}
+                </nav>
 
                 {/* ── TAB NAVIGATION ── */}
                 <nav className="r-tabs">
@@ -166,7 +203,40 @@ export default function Rankings() {
                             <p className="r-empty-title">Nog geen scores ingevoerd</p>
                             <p className="r-empty-sub">{currentGroupInfo?.label} — {currentGroupInfo?.gender}</p>
                         </div>
+                    ) : isOverall ? (
+                        /* ── OVERALL RANKING TABLE ── */
+                        <>
+                            <div className="r-table-meta">
+                                <span className="r-athlete-count">👥 {athletes.length} atleten</span>
+                            </div>
+
+                            <div className="r-table-wrap">
+                                <table className="r-table r-table--overall">
+                                    <thead>
+                                        <tr>
+                                            <th className="r-th r-th-rank">#</th>
+                                            <th className="r-th r-th-name">Atleet</th>
+                                            <th className="r-th r-th-team">Team</th>
+                                            {availableEvents.map(ev => (
+                                                <th key={ev} className="r-th r-th-event-pts">{ev}</th>
+                                            ))}
+                                            <th className="r-th r-th-total-pts">Totaal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {athletes.map((a, i) => (
+                                            <OverallRankingRow
+                                                key={`o-${i}`}
+                                                athlete={a}
+                                                events={availableEvents}
+                                            />
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </>
                     ) : (
+                        /* ── PER-EVENT RANKING TABLE ── */
                         <>
                             <div className="r-table-meta">
                                 <span className="r-athlete-count">👥 {athletes.length} atleten</span>
@@ -256,6 +326,53 @@ function RankingRow({ athlete }) {
             </td>
             <td className="r-td r-td-points">
                 <span className="r-points">+{athlete.punten}</span>
+                <span className="r-points-label">pts</span>
+            </td>
+        </tr>
+    );
+}
+
+function OverallRankingRow({ athlete, events }) {
+    const teamColor = getTeamColor(athlete.team);
+    const isTop3 = athlete.rang <= 3;
+    const icon = rankIcon(athlete.rang);
+
+    return (
+        <tr
+            className={`r-row ${isTop3 ? 'r-row--top3' : ''}`}
+            style={{ '--team-color': teamColor }}
+        >
+            <td className="r-td r-td-rank">
+                <span className={`r-rank ${isTop3 ? 'r-rank--medal' : ''}`}>
+                    {icon ? <span className="r-rank-icon">{icon}</span> : null}
+                    <span className="r-rank-num">{athlete.rang}</span>
+                </span>
+            </td>
+            <td className="r-td r-td-name">
+                <span className="r-athlete-name">{athlete.naam}</span>
+            </td>
+            <td className="r-td r-td-team">
+                <span className="r-team-pill" style={{ background: teamColor, color: '#fff' }}>
+                    {athlete.team}
+                </span>
+            </td>
+            {events.map(ev => {
+                const evData = athlete.events?.[ev];
+                return (
+                    <td key={ev} className="r-td r-td-event-pts">
+                        {evData ? (
+                            <span className="r-event-pts-cell">
+                                <span className="r-event-pts-value">+{evData.punten}</span>
+                                <span className="r-event-pts-rank">#{evData.rang}</span>
+                            </span>
+                        ) : (
+                            <span className="r-event-pts-empty">—</span>
+                        )}
+                    </td>
+                );
+            })}
+            <td className="r-td r-td-total-pts">
+                <span className="r-total-points">{athlete.totaal}</span>
                 <span className="r-points-label">pts</span>
             </td>
         </tr>
