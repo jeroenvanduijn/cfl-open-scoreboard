@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
-const ACTIEVE_WEEK = 2;
+const ACTIEVE_WEEK = 3;
 const API_URL =
   'https://script.google.com/macros/s/AKfycbzSgAuQFaAdH8LkcH8X3gofYDrrbJowX3YwcmqVflhKv9ZDXuvXn6nH-87xhuylTGFG/exec';
 const REFRESH_INTERVAL = 30_000; // ms

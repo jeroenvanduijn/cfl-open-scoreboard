@@ -26,7 +26,7 @@ const GROUPS = [
 ];
 
 // Available event views
-const EVENT_VIEWS = ['26.1', '26.2', 'Overall'];
+const EVENT_VIEWS = ['26.1', '26.2', '26.3', 'Overall'];
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 function formatTime(iso) {
@@ -51,7 +51,7 @@ export default function Rankings() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeGroup, setActiveGroup] = useState('Foundations_Vrouw');
-    const [activeEvent, setActiveEvent] = useState('26.2');
+    const [activeEvent, setActiveEvent] = useState('26.3');
     const pausedUntilRef = useRef(0); // timestamp until which auto-cycle is paused
 
     // Auto-cycle through tabs every 20 seconds

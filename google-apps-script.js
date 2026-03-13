@@ -21,7 +21,7 @@ const POINTS = {
 };
 
 // ⚠️ Pas aan als je naar week 2 of 3 gaat
-const ACTIEVE_WEEK = "26.2";
+const ACTIEVE_WEEK = "26.3";
 
 // Kolom indices Deelnemers sheet (0-based)
 // A=Voornaam, B=Achternaam, C=Tshirt, D=Team, E=Regnr, F=Email, G=Geslacht
