@@ -60,7 +60,14 @@ export default function Rankings() {
             if (Date.now() < pausedUntilRef.current) return; // paused by manual click
             setActiveGroup(prev => {
                 const idx = GROUPS.findIndex(g => g.key === prev);
-                return GROUPS[(idx + 1) % GROUPS.length].key;
+                const nextIdx = (idx + 1) % GROUPS.length;
+                
+                // Toggle between 26.3 and Overall when we loop back to the first group
+                if (nextIdx === 0) {
+                    setActiveEvent(prevEvent => prevEvent === '26.3' ? 'Overall' : '26.3');
+                }
+                
+                return GROUPS[nextIdx].key;
             });
         }, TAB_CYCLE_INTERVAL);
         return () => clearInterval(interval);
